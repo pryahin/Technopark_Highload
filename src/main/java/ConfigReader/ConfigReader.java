@@ -20,9 +20,6 @@ public class ConfigReader {
             if (conf[0].equals("listen")) {
                 HttpServer.PORT = Integer.parseInt(conf[1]);
             }
-            if (conf[0].equals("cpu_limit")) {
-                HttpServer.CPU = Integer.parseInt(conf[1]);
-            }
             if (conf[0].equals("thread_limit")) {
                 HttpServer.THREADS = Integer.parseInt(conf[1]);
             }
@@ -36,7 +33,6 @@ public class ConfigReader {
 
     public static void print() {
         System.out.println("Port: " + HttpServer.PORT +
-        "\nMax cpu: " + HttpServer.CPU +
         "\nMax threads: " + HttpServer.THREADS +
         "\nRoot: " + Worker.root);
     }
