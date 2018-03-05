@@ -19,22 +19,25 @@ public class ConfigReader {
             final String[] conf = line.split(" ");
             if (conf[0].equals("listen")) {
                 HttpServer.PORT = Integer.parseInt(conf[1]);
-                System.out.println("Port: " + HttpServer.PORT);
             }
             if (conf[0].equals("cpu_limit")) {
                 HttpServer.CPU = Integer.parseInt(conf[1]);
-                System.out.println("max cpu: " + HttpServer.CPU);
             }
             if (conf[0].equals("thread_limit")) {
                 HttpServer.THREADS = Integer.parseInt(conf[1]);
-                System.out.println("max threads: " + HttpServer.THREADS);
             }
             if (conf[0].equals("document_root")) {
                 Worker.root = conf[1];
-                System.out.println("root: " + conf[1]);
             }
         }
         fstream.close();
         bufferedReader.close();
+    }
+
+    public static void print() {
+        System.out.println("Port: " + HttpServer.PORT +
+        "\nMax cpu: " + HttpServer.CPU +
+        "\nMax threads: " + HttpServer.THREADS +
+        "\nRoot: " + Worker.root);
     }
 }

@@ -17,6 +17,7 @@ public class ThreadPool implements Executor {
 
     private void createThread() {
         new Thread(new TaskWorker()).start();
+        currentCount++;
     }
 
     @Override
@@ -24,11 +25,8 @@ public class ThreadPool implements Executor {
         synchronized (this) {
             if (currentCount < countThread) {
                 createThread();
-                currentCount++;
             }
-            if (!queueTask.offer(command)) {
-                System.out.println("Task can not add in Queue");
-            }
+            queueTask.offer(command);
         }
     }
 

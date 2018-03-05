@@ -29,7 +29,7 @@ public class Worker implements Runnable {
             this.raw = new BufferedOutputStream(this.socket.getOutputStream());
             this.out = new OutputStreamWriter(raw);
         } catch (IOException e) {
-            System.out.println("problem with in/out");
+            e.printStackTrace();
         }
     }
 
@@ -82,7 +82,7 @@ public class Worker implements Runnable {
                 try {
                     contentType = typeFiles.get(fileName.substring(posLastDot + 1));
                 } catch (Exception e) {
-                    System.out.println("Unsupported type=" + fileName.substring(posLastDot + 1));
+                    e.printStackTrace();
                     sendHeader(response.notAllowed(version));
                     return;
                 }
@@ -141,7 +141,6 @@ public class Worker implements Runnable {
                 Response();
             }
         } catch (Exception e) {
-            System.out.println("catch in execute");
             e.printStackTrace();
         } finally {
             finish();
@@ -153,7 +152,6 @@ public class Worker implements Runnable {
             in.close();
             socket.close();
         } catch (IOException e) {
-            System.out.println("can not close");
             e.printStackTrace();
         }
     }
@@ -163,7 +161,7 @@ public class Worker implements Runnable {
             out.write(responseHeader);
             out.flush();
         } catch (Exception e) {
-            System.out.println("catch in sendHeader" + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

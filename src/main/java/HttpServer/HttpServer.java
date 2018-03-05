@@ -15,8 +15,8 @@ public class HttpServer {
     public static String CONFIG = "/Users/vova/httpServer/httpd.conf";
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Start...\n");
         ConfigReader.read();
+        ConfigReader.print();
         ServerSocket serverSocket = new ServerSocket(PORT);
         final ThreadPool threadPool = new ThreadPool(THREADS);
 
