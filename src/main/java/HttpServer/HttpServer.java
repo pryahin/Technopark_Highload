@@ -12,7 +12,7 @@ public class HttpServer {
     public static int CPU = 4;
     public static int PORT = 80;
     public static int THREADS = 256;
-    public static String CONFIG = "/Users/vova/httpServer/httpd.conf";
+    public static String CONFIG = "/etc/httpd.conf";
 
     public static void main(String[] args) throws IOException {
         ConfigReader.read();
