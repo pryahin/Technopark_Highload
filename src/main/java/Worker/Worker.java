@@ -9,9 +9,10 @@ import java.util.HashMap;
 
 public class Worker implements Runnable {
     public static String root = "";
-    private static final String indexFileName = "index.html";
+    private final String indexFileName = "index.html";
     private final Response response = new Response();
-    private static HashMap<String, String> typeFiles;
+    private final HashMap<String, String> typeFiles = new HashMap<>();
+    private boolean isFolder = false;
 
     private Socket socket;
     private BufferedReader in;
@@ -33,19 +34,15 @@ public class Worker implements Runnable {
     }
 
     private void setTypes() {
-        final HashMap<String, String> typeFiles = new HashMap<>();
-
-        typeFiles.put("html", "text/html");
-        typeFiles.put("css", "text/css");
-        typeFiles.put("js", "text/javascript");
-        typeFiles.put("html", "text/html");
-        typeFiles.put("jpg", "image/jpeg");
-        typeFiles.put("jpeg", "image/jpeg");
-        typeFiles.put("png", "image/png");
-        typeFiles.put("gif", "image/gif");
-        typeFiles.put("swf", "application/x-shockwave-flash");
-
-        Worker.typeFiles = typeFiles;
+        this.typeFiles.put("html", "text/html");
+        this.typeFiles.put("css", "text/css");
+        this.typeFiles.put("js", "text/javascript");
+        this.typeFiles.put("html", "text/html");
+        this.typeFiles.put("jpg", "image/jpeg");
+        this.typeFiles.put("jpeg", "image/jpeg");
+        this.typeFiles.put("png", "image/png");
+        this.typeFiles.put("gif", "image/gif");
+        this.typeFiles.put("swf", "application/x-shockwave-flash");
     }
 
     private File getFile(String fileName) {
@@ -92,6 +89,7 @@ public class Worker implements Runnable {
             } else {
                 if (fileName.endsWith("/")) {
                     fileName += indexFileName;
+                    isFolder = true;
                     contentType = typeFiles.get("html");
                 } else {
                     sendHeader(response.forbidden(version));
@@ -113,9 +111,8 @@ public class Worker implements Runnable {
             if (method.toUpperCase().equals("GET")) {
                 sendFile(file, version);
             }
-
         } else {
-            sendHeader(response.notFound(version));
+            sendHeader(isFolder ? response.forbidden(version) : response.notFound(version));
         }
     }
 
