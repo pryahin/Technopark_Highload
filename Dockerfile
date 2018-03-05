@@ -9,8 +9,9 @@ RUN apt-get install -y maven
 ENV WORK /opt
 
 COPY . $WORK/java/
-COPY ./httpd.conf /etc
-COPY ./httptest /var/www/html/httptest
+RUN mkdir -p /var/www/html
+#COPY ./httpd.conf /etc
+#COPY ./httptest /var/www/html/httptest
 
 WORKDIR $WORK/java
 RUN mvn package
